@@ -25,17 +25,6 @@ class TableController {
         }
     }
 
-    async clearTable(req,res, next){
-        try{
-            await Table.findByIdAndUpdate({_id : req.body.tableId},{
-                status : false,
-            })
-            res.redirect('back')
-        }
-        catch(err){
-            next(err)
-        }
-    }
 }
 
 module.exports = new TableController;
