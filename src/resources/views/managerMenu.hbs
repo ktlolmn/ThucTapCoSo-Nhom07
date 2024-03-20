@@ -1,0 +1,429 @@
+<style>
+    .home-oder {
+        display: flex;
+        position: relative;
+        justify-content: space-between;
+        background-color: rgba(95, 158, 160, 0.692);
+        margin-left: 270px;
+        margin-top: 40px;
+        max-height: 670px;
+        height: 570px;
+        padding: 0;
+        border-radius: 25px;
+        overflow: hidden;
+    }
+
+    .left-content,
+    .right-content {
+        width: 50%;
+        margin: 0 10px;
+    }
+
+
+    .list-items, .list-table {
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 2px 3px 10px #838181;
+        background-color: rgba(238, 238, 238, 0.884);
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        list-style: none;
+        padding: 12px 0 12px 12px;
+        overflow: auto; /* Tạo thanh cuộn nếu danh sách vượt quá kích thước cha */
+        max-height: 84%;
+    }
+
+    .list-items::-webkit-scrollbar-thumb, .list-table::-webkit-scrollbar-thumb {
+        background: #00000069;
+        border-radius: 10px;
+    }
+
+    .list-items::-webkit-scrollbar, .list-table::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .list-items::-webkit-scrollbar-track, .list-table::-webkit-scrollbar-track {
+        border-radius: 10px;
+        border: 1px solid #757575;
+    }
+
+    .item, .list-table li {
+        margin: 10px;
+        width: calc(33.3333% - 20px); /* Chiều rộng của mỗi mục là 50% với khoảng cách 10px giữa chúng */
+        box-sizing: border-box; /* Đảm bảo kích thước tính cả border và padding */
+        float: left; /* Cho phép các mục nằm cạnh nhau */
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 4px 4px 10px #615f5f;
+    }
+
+    .item {
+        background-color: #ffff;
+        height: 240px;
+    }
+
+    .item>img {
+        width: 100%;
+        height: 50%; /* Duy trì tỷ lệ khung hình tự động */
+    }
+
+    .item .decrip {
+        height: 40%;
+    }
+
+    .item .decrip h4 {
+        height: 33px;
+        margin: 4px;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .item .decrip p {
+        font-style: italic;
+        margin: 4px 0;
+        padding: 0;
+        font-size: 15px;
+
+    }
+
+    .item .decrip button {
+        margin: 4px 0;
+        padding: 8px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgba(122, 71, 23, 0.671);
+        color: #fff;
+    }
+
+    .item .decrip button:hover {
+        cursor: pointer;
+    }
+
+    .list-oder {
+        position: relative;
+        padding: 12px 0;
+        margin-top: 30px;
+        width: 35%;
+        max-height: 84%;
+        border-radius: 10px;
+        box-shadow: 2px 3px 10px #838181;
+        background-color: rgba(170, 170, 170, 0.856);
+    }
+
+    .list-table .show-table {
+        padding: 8px 12px;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+    }
+
+    .list-table .edit-table:hover,
+    .list-table .delete-table:hover{
+        cursor: pointer;
+    }
+
+    .list-table button{
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 4px;
+        padding: 4px 0;
+    }
+
+    .list-table li {
+        cursor: pointer;
+        width: calc(100% / 4 - 25px); /* Chiều rộng của mỗi mục là 50% với khoảng cách 10px giữa chúng */
+        height: 140px;
+        box-shadow: 4px 4px 10px #8b8a8a;
+        background-color: #57c999;
+    }
+    .title-p{
+        font-style: italic;
+        text-decoration: underline;
+        opacity: .8;
+        margin-left: 12px;
+    }
+    .header-manager {
+        display: flex;
+        align-items: center;
+        height: 25px;
+        padding-top: 8px;
+        justify-content: space-between;
+    }
+
+    .header-manager input {
+        padding: 4px;
+        border: none;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .header-manager .fa-search {
+        padding: 4px;
+        border: none;
+        background-color: #fff;
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .option-action {
+        display: none;
+        position: absolute;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+        width: 100px; 
+        top: 5%;
+        padding: 0 6px;
+    }
+
+    .add-menu{
+        margin-right: 12px;
+        cursor: pointer;
+    }
+
+    .add-menu:hover + .option-action,
+    .option-action:hover {
+        display: block;
+    }
+
+    /* Optional styling for the links inside option-action */
+    .option-action li {
+        background-color: #fff;
+        border-radius: 5px;
+        list-style: none;
+        margin-bottom: 4px;
+        width: auto;
+        cursor: pointer;
+    }
+
+    .option-action li p{
+        color: #333;
+        font-size: 14px;
+        padding: 4px ;
+    }
+
+    .option-action li p:hover {
+        color: #007bff;
+    }
+
+    .div-create-form, 
+    .div-create-form-table,
+    .div-edit-form {
+        display: none;
+        position: fixed;
+        top: 40%;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        padding: 24px;
+        background-color: rgba(26, 25, 25, 0.582);
+        border-radius: 10px;
+        z-index: 9999;
+    }
+
+    #create-form,
+    #create-form-table,
+    #edit-form {
+        display: flex;
+        transform: translate(100%, 50%);
+        justify-content: center;
+        flex-direction: column;
+        width: 30%;
+        padding: 24px;
+        background-color: #fff;
+        border-radius: 10px;
+    }
+
+    #create-form .close-create-form,
+    #create-form-table .close-create-form,
+    #edit-form .close-form {
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+        text-align: right;
+    }
+
+    #create-form h3,
+    #create-form-table h3,
+    #edit-form h3 {
+        text-align: center;
+        margin-bottom: 10px;
+        font-style: italic;
+    }
+
+    #create-form label,
+    #create-form-table label,
+    #edit-form label {
+        margin-top: 10px;
+        margin-bottom: 2px;
+        font-weight: 550;
+    }
+
+    #create-form input,
+    #create-form-table input,
+    #edit-form input {
+        margin-bottom: 20px;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    #create-form button,
+    #create-form-table button,
+    #edit-form button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgba(122, 71, 23, 0.671);
+        color: white;
+        cursor: pointer;
+        width: 30%;
+        float: left;
+    }
+
+    #create-form button:hover,
+    #create-form-table button:hover,
+    #edit-form button:hover {
+        background-color: rgba(122, 71, 23, 0.671);
+    }
+
+
+    .custom-swal-container{
+        z-index: 99999;
+        font-size: 12px;
+    }
+    .custom-swal-popup{
+        max-width: 300px;
+        font-size: 12px;
+    }
+    .custom-swal-confirm-button{
+        border-radius: 8px;
+    }
+
+    #toast {
+        visibility: hidden;
+        min-width: 200px;
+        margin-left: -125px;
+        background: rgba(255, 165, 0, 0.4);
+	    border-color: rgb(255, 165, 0);
+        color: #fff;
+        border-radius: 15px;
+        text-align: center;
+        border-radius: 2px;
+        padding: 10px 3px;
+        position: fixed;
+        z-index: 1;
+        left: 90%;
+        bottom: 50px;
+        font-size: 17px;
+        border-left: 1px #a7815e solid;
+        border-bottom: 1px #a7815e solid;
+
+    }
+
+    #toast.show {
+        visibility: visible;
+    }
+</style>
+<div>
+    <div id="toast"></div>
+    <div class="home-oder">
+        <div class="left-content" style="margin-left:12px;">
+            <div class="header-manager" style="">
+                <h4 class="title-p">Quản lý thực đơn của quán</h4>
+                <div style="display: flex; margin-right: 12px; ">
+                    <input class="btn-search" type="text" name="" id="" placeholder="Tìm kiếm...">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <ul style="overflow:auto;" class="list-items">
+                {{#each products}}
+                    {{#unless this.deleted}}
+                        <li class="item">
+                            <img src="{{this.codeImg}}" alt="">
+                            <div class="decrip">
+                                <h4>{{this.name}}</h4>
+                                <p>{{this.price}} đ</p>
+                                <button data-id="{{this._id}}" data-name="{{this.name}}" data-price="{{this.price}}" class="edit-button">Sửa</button>
+                            </div>
+                        </li>
+                    {{/unless}}
+                {{/each}}
+            </ul>
+        </div>
+        <div class="right-content" style="margin-right: 12px; position:relative;">
+            <div class="header-manager">
+                <h4 class="title-p">Quản lý bàn ăn của quán</h4>
+                <h4 class="menu-action">
+                    <p class="add-menu"><i class="fas fa-plus-circle"></i> Nhập kho</p>
+                    <div class="option-action">
+                        <li class="create-menu"><p>Thêm món ăn</p></li>
+                        <li class="create-table" onclick= "createTable()"><p>Thêm bàn ăn</p></li>
+                    </div>
+                </h4>
+            </div>
+            <ul class="list-table">
+                {{#each tables}}
+                    <li>
+                        <h3 contenteditable="false">
+                            {{this.name}}
+                        </h3>
+                        <button class="show-table" data-name="{{this.name}}" data-table="{{this._id}}" onclick="showActions(this)">Thao tác</button>
+                        
+                        <div style="display: flex; flex-direction: column;">
+                            <button class="edit-table" style="display: none;" data-table="{{this._id}}" onclick="saveEdit(this)">Lưu</button>
+                            <button class="delete-table" style="display: none;" data-table="{{this._id}}" data-status="{{this.status}}" onclick="deleteTable(this)">Xóa</button>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+
+        {{!-- edit form --}}
+        <div class="div-edit-form">
+            <form  id="edit-form" action="">
+                <p class="close-form"><i class="fas fa-times"></i></p>
+                <h3>Điền thông tin cần sửa</h3>
+                <label for="">Tên món ăn:</label>
+                <input type="text" value="" id="name" name="name" required>
+                <label for="">Giá:</label>
+                <input type="text" value="" id="price" name="price" onkeyup= myFunction() required>
+                <div style="display: flex; flex-direction:row; justify-content:space-around;">
+                    <button id="submit-edit">Sửa</button>
+                    <button id="delete-product">Xóa</button>
+                </div>
+            </form>
+        </div>
+
+        {{!-- xóa --}}
+        <form id="delete-form" action="" method="POST"></form>
+
+        {{!--create form  --}}
+        <div class="div-create-form">
+            <form  id="create-form" action="" method="POST" enctype="multipart/form-data">
+                <p class="close-create-form"><i class="fas fa-times"></i></p>
+                <h3>Điền thông tin</h3>
+                <input type="file" name="img" id="img" onfocus=validate(this)> 
+                <label for="">Tên món ăn:</label>
+                <input type="text" value="" id="name" name="name" required onfocus=validate(this)>
+                <label for="">Giá:</label>
+                <input type="text" value="" id="price" name="price" onkeyup= myFunction() onfocus=validate(this) required>
+                <h5 class="mess" style="color: red; display:none;">Vui lòng tải ảnh lên</h5>
+                <button id="submit-create">Tạo</button>
+            </form>
+        </div>
+
+        <div class="div-create-form-table">
+            <form  id="create-form-table" action="" method="POST">
+                <p class="close-create-form" onclick="closeCreateTableForm()"><i class="fas fa-times"></i></p>
+                <h3>Điền thông tin</h3> 
+                <label for="">Tên bàn:</label>
+                <input type="text" value="" id="name" name="name" tabindex="1" required onfocus=validate(this)>
+                <button id="submit-create" onclick="submitCreateTable(this)">Tạo</button>
+            </form>
+        </div>
+    </div>
+</div>
