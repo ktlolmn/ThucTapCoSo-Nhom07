@@ -9,7 +9,7 @@ function route(app){
     app.use('/manager-table',validateMiddleware.verifyTokenAndUser,statusTableRoutes)
     //app.use('/manager-menu',validateMiddleware.verifyTokenAndUser,managerMenuRoutes)
     // app.use('/history',validateMiddleware.verifyTokenAndUser, historyRoute)
-    // app.use('/home',validateMiddleware.verifyTokenAndUser,homeRoutes)
+    app.use('/home',validateMiddleware.verifyTokenAndUser,homeRoutes)
     app.use('/',loginRoutes)
     
 }
